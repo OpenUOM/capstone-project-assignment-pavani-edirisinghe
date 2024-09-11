@@ -1,14 +1,15 @@
+
 const dbConnection = require("./sqlite");
 
 dbConnection
-  .getDbConnection()
-  .then((db) => {
-    init(db);
-  })
-  .catch((err) => {
-    console.log(err);
-    throw err;
-  });
+   .getDbConnection()
+   .then((db) => {
+       init(db);
+   })
+   .catch((err) => {
+       console.log(err);
+       throw err;
+   });
 
 let _db;
 
@@ -51,12 +52,12 @@ const readTeacherInfo = async (id) => {
 }
 
 const addTeacher = async (id, name, age) => {
-    const sql = `INSERT INTO teacher(id,name,age) values (?, ?, ?)`
+    const sql = `INSERT INTO teacher(id,name,age) VALUES (?,?,?)`
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql, [id, name, age])
             .then(() => {
-                resolve({status: "Successfully inserted Teacher"});
+                resolve({ status: "Successfully inserted Teacher" })
             })
             .catch((error) => {
                 reject(error);
@@ -70,7 +71,7 @@ const updateTeacher = async (name, age, id) => {
         knex_db
             .raw(sql, [name, age, id])
             .then(() => {
-                resolve({status: "Successfully updated Teacher"});
+                resolve({ status: "Successfully updated Teacher" })
             })
             .catch((error) => {
                 reject(error);
@@ -83,8 +84,8 @@ const deleteTeacher = async (id) => {
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql,[id])
-            .then((data) => {
-                resolve(data);
+            .then(() => {
+                resolve({ status: "Successfully deleted Teacher" })
             })
             .catch((error) => {
                 reject(error);
@@ -97,8 +98,8 @@ const readStudents = async () => {
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql)
-            .then((data) => {
-                resolve(data);
+            .then((student) => {
+                resolve(student);
             })
             .catch((error) => {
                 reject(error);
@@ -111,8 +112,8 @@ const readStudentInfo = async (id) => {
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql, [id])
-            .then((data) => {
-                resolve(data);
+            .then((student) => {
+                resolve(student);
             })
             .catch((error) => {
                 reject(error);
@@ -121,12 +122,12 @@ const readStudentInfo = async (id) => {
 }
 
 const addStudent = async (id, name, age, religion) => {
-    const sql = `SELECT * FROM INSERT INTO student(id,name,age,religion) values (?, ?,?, ?)`
+    const sql = `SELECT * FROM INSERT INTO student(id,name,age,religion) VALUES (?,?,?,?)`
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql, [id, name, age, hometown])
             .then(() => {
-                resolve({status: "Successfully inserted student"});
+                resolve({status: "Successfully inserted Student" })
             })
             .catch((error) => {
                 reject(error);
@@ -134,13 +135,13 @@ const addStudent = async (id, name, age, religion) => {
     });
 }
 
-const updateStudent = async (name, age, hometown, id) => {
-    const sql = `SELECT * FROM UPDATE student SET name=?, age=? WHERE id=?`
+const updateStudent = async (name, age, id, hometown) => {
+    const sql = `SELECT * FROM UPDATE student SET name=?, age=?, hometown=?  WHERE id=?`
     return new Promise((resolve, reject) => {
         knex_db
-            .raw(sql, [name, age, hometown, id])
-            .then(() => {
-                resolve({status: "Successfully updated student"});
+            .raw(sql, [name, age, id, hometown])
+            .then((data) => {
+                resolve({ status: "Successfully updated Student" })
             })
             .catch((error) => {
                 reject(error);
@@ -153,14 +154,15 @@ const deleteStudent = async (id) => {
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql, [id])
-            .then((data) => {
-                resolve(data);
+            .then(() => {
+                resolve({ status: "Successfully deleted Student" })
             })
             .catch((error) => {
                 reject(error);
             });
     });
 }
+
 
 module.exports = {
     readTeachers,
